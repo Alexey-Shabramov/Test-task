@@ -17,7 +17,6 @@ public class Constants {
      * Entities and session attributes names
      */
     public static final String CLIENT = "client";
-    public static final String CLIENT_STATS = "clientStats";
     public static final String REGISTRATION_FORM = "registrationForm";
     public static final String PASSWORD_FORM = "passwordForm";
     public static final String PRIVATE_INFO_FORM = "privateInfoForm";
@@ -44,5 +43,9 @@ public class Constants {
      * Dozer mapping names
      */
     public static final String DTO_TO_CLIENT = "dtoToClient";
+    public static final String CHANGE_PRIVATE_INFO = "changePrivateInfo";
+    public static final String CHANGE_PRIVATE_EMAIL = "changePrivateEmail";
+    public static final String CLIENT_TO_DTO = "clientToDto";
+    public static final String REGISTRATION_FORM_TO_CLIENT = "registrationFormToClient";
     public static final String PASSWORD_CHANGE = "passwordChange";
 }

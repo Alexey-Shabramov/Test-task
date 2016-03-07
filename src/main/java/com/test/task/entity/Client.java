@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(name = "client")
 @DynamicUpdate(value = true)
 @AttributeOverride(name = "id", column = @Column(name = "id"))
-public class Client extends Identifier{
+public class Client extends Identifier {
 
     private static final long serialVersionUID = 1L;
 

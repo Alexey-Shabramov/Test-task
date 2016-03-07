@@ -32,6 +32,6 @@
         <beans:property name="useTrailingSlashMatch" value="true"/>
     </beans:bean>
 
-    <import resource="spring/database.xml"/>
-    <import resource="spring/spring-beans.xml"/>
+    <import resource="database.xml"/>
+    <import resource="spring-beans.xml"/>
 </beans:beans>

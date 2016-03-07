@@ -3,6 +3,7 @@ package com.test.task.controller;
 import com.test.task.controller.form.LoginForm;
 import com.test.task.dto.ClientDto;
 import com.test.task.entity.Client;
+import com.test.task.exception.ServiceException;
 import com.test.task.service.ClientService;
 import com.test.task.util.Constants;
 import com.test.task.util.PasswordUtil;
@@ -31,9 +32,9 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String init(ModelMap model, HttpServletRequest request) {
         if (request.getSession().getAttribute(Constants.CLIENT) != null) {
-            if(((ClientDto)request.getSession().getAttribute(Constants.CLIENT)).isAdmin()){
+            if (((ClientDto) request.getSession().getAttribute(Constants.CLIENT)).isAdmin()) {
                 return Constants.ADMIN_PANEL;
-            }else{
+            } else {
                 return Constants.PRIVATE_AREA;
             }
         } else {
@@ -49,19 +50,28 @@ public class LoginController {
         List<String> errorList = new ArrayList<>();
         if (!LoginValidator.validateLogin(loginForm.getLoginOrEmail(), loginForm.getPassword())) {
             errorList.add(Constants.EMPTY_FIELD);
-        }else if (clientService.getByEmailOrLogin(loginForm.getLoginOrEmail()) == null) {
-            errorList.add(Constants.CLIENT_NOT_EXISTS);
-        }else if (!LoginValidator.validatePasswords(PasswordUtil.encryptPassword(loginForm.getPassword()),
-                clientService.getByEmailOrLogin(loginForm.getLoginOrEmail()).getPassword())) {
-            errorList.add(Constants.PASSWORD_IS_INCORRECT);
+        } else try {
+            if (clientService.getByEmailOrLogin(loginForm.getLoginOrEmail()) == null) {
+                errorList.add(Constants.CLIENT_NOT_EXISTS);
+            } else if (!LoginValidator.validatePasswords(PasswordUtil.encryptPassword(loginForm.getPassword()),
+                    clientService.getByEmailOrLogin(loginForm.getLoginOrEmail()).getPassword())) {
+                errorList.add(Constants.PASSWORD_IS_INCORRECT);
+            }
+        } catch (ServiceException e) {
+            e.printStackTrace();
         }
         if (!errorList.isEmpty()) {
             return addErrors(errorList);
         } else {
             ModelAndView mav;
-            Client client = clientService.getByEmailOrLogin(loginForm.getLoginOrEmail());
+            Client client = null;
+            try {
+                client = clientService.getByEmailOrLogin(loginForm.getLoginOrEmail());
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
             ClientDto clientDto = new ClientDto();
-            dozerBeanMapper.map(client, clientDto, "clientToDto");
+            dozerBeanMapper.map(client, clientDto, Constants.CLIENT_TO_DTO);
             request.getSession().setAttribute(Constants.CLIENT, clientDto);
             if (clientDto.isAdmin()) {
                 mav = new ModelAndView(Constants.REDIRECT_HOME + "/" + Constants.ADMIN_PANEL);

@@ -2,6 +2,8 @@ package com.test.task.serviceImpl;
 
 import com.test.task.dao.daoImpl.ClientDaoImpl;
 import com.test.task.entity.Client;
+import com.test.task.exception.DaoException;
+import com.test.task.exception.ServiceException;
 import com.test.task.service.serviceImpl.ClientServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,31 +44,31 @@ public class ClientServiceImplTest {
     }
 
     @Test
-    public void testAddNewClient(){
+    public void testAddNewClient() throws ServiceException, DaoException {
         clientService.addNewClient(client);
         verify(clientDao).save(client);
     }
 
     @Test
-    public void testChangePassword(){
+    public void testChangePassword() throws DaoException, ServiceException {
         clientService.changePassword(client.getId(), "somePassword");
         verify(clientDao, Mockito.times(0)).save(client);
     }
 
     @Test
-    public void testGetByLogin(){
+    public void testGetByLogin() throws ServiceException, DaoException {
         clientService.getByLogin("someLogin");
         verify(clientDao).getByLogin("someLogin");
     }
 
     @Test
-    public void testGetByEmail(){
+    public void testGetByEmail() throws ServiceException, DaoException {
         clientService.getByEmail("someEmail");
         verify(clientDao).getByEmail("someEmail");
     }
 
     @Test
-    public void testGetByEmailOrLogin(){
+    public void testGetByEmailOrLogin() throws ServiceException, DaoException {
         clientService.getByEmailOrLogin("emailOrLogin");
         verify(clientDao).getByEmailOrLogin("emailOrLogin");
     }

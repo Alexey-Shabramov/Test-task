@@ -3,6 +3,7 @@ package com.test.task.controller;
 import com.test.task.controller.form.RegistrationForm;
 import com.test.task.dto.ClientDto;
 import com.test.task.entity.Client;
+import com.test.task.exception.ServiceException;
 import com.test.task.service.ClientService;
 import com.test.task.util.Constants;
 import org.dozer.DozerBeanMapper;
@@ -42,21 +43,33 @@ public class RegistrationController {
             return new ModelAndView(Constants.PRIVATE_AREA);
         }
         List<String> errorList = new ArrayList<>();
-        if (clientService.getByEmail(registrationForm.getEmail()) != null) {
-            errorList.add(Constants.EXIST_USER_EMAIL);
+        try {
+            if (clientService.getByEmail(registrationForm.getEmail()) != null) {
+                errorList.add(Constants.EXIST_USER_EMAIL);
+            }
+        } catch (ServiceException e) {
+            e.printStackTrace();
         }
-        if (clientService.getByLogin(registrationForm.getLogin()) != null) {
-            errorList.add(Constants.EXIST_USER_LOGIN);
+        try {
+            if (clientService.getByLogin(registrationForm.getLogin()) != null) {
+                errorList.add(Constants.EXIST_USER_LOGIN);
+            }
+        } catch (ServiceException e) {
+            e.printStackTrace();
         }
         if (!errorList.isEmpty()) {
             request.setAttribute(Constants.REGISTRATION_FORM, registrationForm);
             return addErrors(errorList);
         } else {
             Client client = new Client();
-            dozerBeanMapper.map(registrationForm, client, "registrationFormToClient");
-            client = clientService.addNewClient(client);
+            dozerBeanMapper.map(registrationForm, client, Constants.REGISTRATION_FORM_TO_CLIENT);
+            try {
+                client = clientService.addNewClient(client);
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
             ClientDto clientDto = new ClientDto();
-            dozerBeanMapper.map(client, clientDto, "clientToDto");
+            dozerBeanMapper.map(client, clientDto, Constants.CLIENT_TO_DTO);
             request.getSession().setAttribute(Constants.CLIENT, clientDto);
             return new ModelAndView(Constants.REDIRECT_HOME + "/" + Constants.PRIVATE_AREA);
         }

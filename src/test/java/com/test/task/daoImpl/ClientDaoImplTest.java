@@ -2,6 +2,7 @@ package com.test.task.daoImpl;
 
 import com.test.task.dao.daoImpl.ClientDaoImpl;
 import com.test.task.entity.Client;
+import com.test.task.exception.DaoException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.After;
@@ -39,13 +40,13 @@ public class ClientDaoImplTest {
     }
 
     @Test
-    public void testGet(){
+    public void testGet() throws DaoException {
         clientDao.save(client);
         assertNotNull(clientDao.get(client.getId()));
     }
 
     @Test
-    public void testSave(){
+    public void testSave() throws DaoException {
         clientDao.save(client);
         assertNotNull(clientDao.get(client.getId()));
         clientDao.delete(client);
@@ -55,14 +56,14 @@ public class ClientDaoImplTest {
     }
 
     @Test
-    public void testDelete(){
+    public void testDelete() throws DaoException {
         clientDao.save(client);
         clientDao.delete(client);
         assertNull(clientDao.getByEmail(client.getEmail()));
     }
 
     @Test
-    public void testListAll(){
+    public void testListAll() throws DaoException {
         for(int i=0;i<=5;i++){
             client = new Client();
             client.setLogin("riqo111");
@@ -76,7 +77,7 @@ public class ClientDaoImplTest {
     }
 
     @Test
-    public void testGetByEmailOrLogin(){
+    public void testGetByEmailOrLogin() throws DaoException {
         clientDao.save(client);
         assertNotNull(clientDao.getByEmailOrLogin(client.getEmail()));
         assertNotNull(clientDao.getByEmailOrLogin(client.getLogin()));
@@ -85,14 +86,14 @@ public class ClientDaoImplTest {
     }
 
     @Test
-    public void testGetByEmail(){
+    public void testGetByEmail() throws DaoException {
         clientDao.save(client);
         assertNotNull(clientDao.getByEmail(client.getEmail()));
         assertEquals(client,clientDao.getByEmail(client.getEmail()));
     }
 
     @Test
-    public void testGetByLogin(){
+    public void testGetByLogin() throws DaoException {
         clientDao.save(client);
         assertNotNull(clientDao.getByEmail(client.getEmail()));
         assertEquals(client,clientDao.getByEmail(client.getEmail()));

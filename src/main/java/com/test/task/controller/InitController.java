@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class InitController {
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView init(){
+    public ModelAndView init() {
         ModelAndView modelAndView = new ModelAndView("/" + Constants.INDEX);
         return modelAndView;
     }
