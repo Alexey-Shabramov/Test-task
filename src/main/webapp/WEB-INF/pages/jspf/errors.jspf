@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<c:if test="${errors != null}">
+    <div id="error">
+    ОБРАНУЖЕНЫ ОШИБКИ:
+    <c:set var="count" value="0" scope="page"/>
+    <c:forEach items="${errors}" var="error">
+        ${count + 1}.&nbsp ${error} </ br>
+    </c:forEach>
+    </div>
+</c:if>

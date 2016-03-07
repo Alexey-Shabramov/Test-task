@@ -1,0 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<p id="siteName"><a href="<c:url value='/' />">LOGOTYPE_PLACE&nbsp;</a></p>
+
+<div id="loginRegistration">
+    <c:choose>
+        <c:when test="${sessionScope.client != null}">
+
+            <c:if test="${sessionScope.client.admin}">
+                <a href="<c:url value='/adminPanel'/>">Админ панель</a> &nbsp;/&nbsp;
+            </c:if>
+
+            <a href="<c:url value='/privateArea'/>">Личный кабинет</a> &nbsp;/ &nbsp;
+            <a href="<c:url value='/logout'/>">Выйти</a>
+        </c:when>
+        <c:otherwise>
+            <a href="<c:url value='/login'/>">Войти</a>&nbsp;/&nbsp;<a href="<c:url value='/registration'/>">Зарегистрироваться</a>
+        </c:otherwise>
+    </c:choose>
+</div>

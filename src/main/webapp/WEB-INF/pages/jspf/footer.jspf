@@ -1,0 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"
+        %>
+
+<div id="footer">
+    SITENAME_PLACE
+    <hr style="width:75%"/>
+    SITE_COPY_WRITE(c)
+</div>

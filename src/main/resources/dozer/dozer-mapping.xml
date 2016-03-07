@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <configuration>
+        <stop-on-errors>true</stop-on-errors>
+        <date-format>MM/dd/yyyy HH:mm</date-format>
+        <wildcard>true</wildcard>
+    </configuration>
+
+    <mapping map-id="registrationFormToClient">
+        <class-a>com.test.task.controller.form.RegistrationForm</class-a>
+        <class-b>com.test.task.entity.Client</class-b>
+    </mapping>
+
+    <mapping map-id="clientToDto">
+        <class-a>com.test.task.entity.Client</class-a>
+        <class-b>com.test.task.dto.ClientDto</class-b>
+    </mapping>
+
+    <mapping map-id="passwordChange">
+        <class-a>com.test.task.entity.Client</class-a>
+        <class-b>com.test.task.dto.ClientDto</class-b>
+        <field>
+            <a>password</a>
+            <b>password</b>
+        </field>
+    </mapping>
+
+    <mapping map-id="changePrivateInfo">
+        <class-a>com.test.task.dto.ClientDto</class-a>
+        <class-b>com.test.task.entity.Client</class-b>
+        <field>
+            <a>name</a>
+            <b>name</b>
+        </field>
+    </mapping>
+
+    <mapping map-id="changePrivateEmail">
+        <class-a>com.test.task.dto.ClientDto</class-a>
+        <class-b>com.test.task.entity.Client</class-b>
+        <field>
+            <a>email</a>
+            <b>email</b>
+        </field>
+    </mapping>
+
+</mappings>
