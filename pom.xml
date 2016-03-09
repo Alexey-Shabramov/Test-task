@@ -54,7 +54,6 @@
             <version>${jstl.version}</version>
         </dependency>
 
-        <!-- Spring AOP dependency -->
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
